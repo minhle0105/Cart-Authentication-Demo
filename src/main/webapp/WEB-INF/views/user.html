@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop</title>
+</head>
+<body>
+<h3>User dashboard</h3>
+<div sec:authorize="isAuthenticated()">
+    <b>Welcome!<span sec:authentication="principal.username"></span></b>
+</div>
+<br/>
+<div sec:authorize="isAuthenticated()">
+    <a th:href="@{/logout}">Logout</a>
+</div>
+<p>
+    <a href="/shopping-cart">Your cart</a>
+</p>
+<table border="1">
+    <tr>
+        <td>Name</td>
+        <td>Price</td>
+        <td>Description</td>
+        <td>Add To Cart</td>
+    </tr>
+    <th:block th:each="product:${products}">
+        <tr>
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.price}"></td>
+            <td th:text="${product.description}"></td>
+            <td><a th:href="@{/add/__${product.id}__(action='user-show')}">Add To Cart</a></td>
+        </tr>
+    </th:block>
+</table>
+</body>
+</html>
